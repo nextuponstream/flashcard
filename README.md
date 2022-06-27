@@ -23,3 +23,38 @@ today, the support on those platforms are being worked on:
 * [Web](https://github.com/bevyengine/bevy/issues/88)
 * [iOS](https://github.com/bevyengine/bevy/issues/87)
 * [Android](https://github.com/bevyengine/bevy/issues/86)
+
+## Build and run
+
+The app is compiled to webassembly and ran in the browser.
+
+### Prerequisite
+
+```bash
+# install wasm-bindgen cli: https://rustwasm.github.io/wasm-bindgen/reference/cli.html
+cargo install -f wasm-bindgen-cli
+```
+
+### Build
+
+```bash
+# .cargo/config.toml is configured to compile to webassembly
+cargo build --release
+wasm-bindgen \
+--out-name flashcard \
+--out-dir target \
+--target web target/wasm32-unknown-unknown/release/flashcard.wasm
+```
+
+### Run
+
+```bash
+# cargo install basic-http-server
+basic-http-server examples/wasm
+
+# with python
+python3 -m http.server --directory examples/wasm
+
+# with ruby
+ruby -run -ehttpd examples/wasm
+```
